@@ -53,7 +53,7 @@ x_test = torch.linspace(0,2*math.pi,1000).unsqueeze(1)
 y_test = model(x_test)
 
 plt.figure(figsize=(10,5))
-plt.plot(x_test,y_test,label='model(x)',color='blue')
+plt.plot(x_test,y_test.detach().numpy(),label='model(x)',color='blue')
 plt.xlabel('x')
 plt.ylabel('model(x)')
 plt.legend()
