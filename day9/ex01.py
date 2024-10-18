@@ -48,7 +48,7 @@ korea_data_index_df.index = pd.to_datetime(
 hawaii_data_index.info()
 # %% 하와이 데이터와 한국 데이터 매칭하기
 filtered_korean_df = korea_data_index_df[
-    korea_data_index_df.index.isin(hawaii_data_index)]
+    korea_data_index_df.index.isin(hawaii_data_index.index)]
 # %%
 final_df = pd.DataFrame(
     {

@@ -34,7 +34,7 @@ model = nn.Sequential(
 
 # %%
 learing_rate = 0.01
-epochs = 100
+epochs = 5000
 optimizer = optim.Adam(model.parameters(),lr=learing_rate)
 loss_fn = nn.MSELoss()
 # %%
@@ -45,7 +45,7 @@ for epoch in range(epochs) :
     loss.backward()
     optimizer.step()
     
-    if epoch % 10 == 0 :
+    if epoch % 500 == 0 :
         print(f"epoch {epoch} : loss {loss}")
 
 # %% 검증
