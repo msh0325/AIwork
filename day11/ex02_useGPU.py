@@ -83,7 +83,7 @@ class LottoLSTM(nn.Module) :
         out = self.fc(out[:,-1,:])
         return out
 
-model = LottoLSTM(7,64,7,2)
+model = LottoLSTM(7,64,7,2).to(device)
 # %%
 criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(),0.001)

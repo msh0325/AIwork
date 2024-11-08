@@ -4,6 +4,7 @@ import folium
 # %%
 data = pd.read_csv('../datasheet/seoul-metro-2015.logs.csv')
 station_info = pd.read_csv('../datasheet/seoul-metro-station-info.csv')
+station_info.set_index('station.code',inplace=True)
 #%%
 data.info()
 # %%
