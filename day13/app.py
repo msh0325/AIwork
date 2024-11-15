@@ -41,8 +41,42 @@ optimizer = torch.optim.Adam(model.parameters(),lr = 0.001)
 
 print(model.parameters())
 # %% train
+def calculate_correct_number(output,y_batch,k) : 
+    _,topk_indice = torch.topk(output,k,dim=1)
+    preds = torch.zeros_lick(output)
+    preds.scatter_(1,topk_indice,1)
+    
+    num_correct_per_sample = (preds * y_batch).sum(dim=1)
+    return num_correct_per_sample.cpu().numpy(),preds
+
 num_epochs = 1000
 for epoch in range(num_epochs) :
-    print(f'train...{epoch}')
+    #print(f'train...{epoch}')
     #train code ㄱㄱ
+    model.train()
+    train_losses = []
+    train_correct_numbers = []
+    
+    for x_batch,y_batch in train_loader :
+        x_batch = x_batch.to(device)
+        y_batch = y_batch.to(device)
+        
+        batch_size = x_batch.size(0)
+        hidden = model.init_hidden(batch_size)
+        
+        optimizer.zero_grad()
+        output,hidden = model(x_batch,hidden)
+        loss = criterion(output,y_batch)
+        loss.backward()
+        optimizer.step()
+        
+        hidden = (hidden[0].deatch(),hidden[0].detach())
+        train_losses.append(loss.item())
+        
+        num_correct_per_sample,_ = calculate_correct_number(output,y_batch,k)
+        train_correct_numbers.extend(num_correct_per_sample)
+        
+    avg_correct_numbers = np.mead(train_correct_numbers)
+    print(f"epoch : {epoch+1}/{num_epochs}, loss = {np.mead(train_losses)}, correct Numbers : {avg_correct_numbers}")
+    
 # %%
