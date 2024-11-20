@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 # %%
 x = torch.linspace(0,2*math.pi,1000).unsqueeze(1) # 0부터 2파이까지 1000조각으로 나눔
 y = torch.sin(x)
-
 # %%
 print(x)
 # %%
