@@ -11,9 +11,9 @@ import matplotlib.pyplot as plt
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(f'device {device}')
 # %%
-class SinModel(nn.Module) :
+class CosModel(nn.Module) :
     def __init__(self) :
-        super(SinModel,self).__init__()
+        super(CosModel,self).__init__()
         self.layer1 = nn.Linear(1,16)
         self.layer2 = nn.Linear(16,32)
         self.layer3 = nn.Linear(32,16)
@@ -27,15 +27,16 @@ class SinModel(nn.Module) :
         x = self.layer4(x)
         return x
 
-model = SinModel()
+model = CosModel()
 # %%
-dataset = torch.load('sin_dataset.pth')
+dataset = torch.load('cos_dataset.pth')
 # %%
-dataloader = DataLoader(dataset,1000)
+batch_size = 1000
+dataloader = DataLoader(dataset,batch_size)
 # %%
 epochs = 5000
-loss_fn = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(),lr=0.001)
+loss_fn = nn.MSELoss()
 # %%
 for epoch in range(epochs) :
     for X,Y in dataloader :
@@ -47,12 +48,11 @@ for epoch in range(epochs) :
         optimizer.step()
         
     if (epoch+1) % 500 == 0 :
-        print(f'epoch {epoch+1}, loss {loss.item()}')
+        print(f"epoch {epoch+1}, loss {loss.item()}")
 # %%
-x_test = torch.linspace(0,2*math.pi,1000).unsqueeze(1)
+x_test  = torch.linspace(0,2*math.pi,1000).unsqueeze(1)
 y_test = model(x_test)
 plt.plot(x_test,y_test.detach().numpy(),color='blue')
 plt.legend()
 plt.show()
-
 # %%
