@@ -16,12 +16,14 @@ if st.button("save_file") :
         file_content = upload_file.read()
         file_path = os.path.join(base_path,upload_file.name)
         with open(file_path,"wb") as f:
-            f.write(file_content)
+            f.write(file_content)     
+        
+        st.image(base_path+"\\"+upload_file.name)
     
     if st.button("돌아가기") :
         pass
     
-    #st.image(" ")
+    
 else :
     upload_files = st.file_uploader("choose upload files",accept_multiple_files=True)
     
